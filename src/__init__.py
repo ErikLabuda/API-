@@ -7,7 +7,7 @@ from src.notes import notes
 from src.database import db, Note
 from flask_jwt_extended import JWTManager
 from flasgger import Swagger, swag_from
-from src.config.swagger import template, swagger_config
+
 
 
 def create_app(test_config=None):
@@ -24,7 +24,7 @@ def create_app(test_config=None):
 
             SWAGGER={
                 'title': "Notes API",
-                'uiversion': 3
+                'uiversion': 2
             }
         )
     else:
@@ -37,17 +37,8 @@ def create_app(test_config=None):
     app.register_blueprint(auth)
     app.register_blueprint(notes)
 
-    Swagger(app, config=swagger_config, template=template)
 
-    """@app.get('/<short_url>')
-    @swag_from('./docs/short_url.yaml')
-    def redirect_to_url(short_url):
-        note = Note.query.filter_by(short_url=short_url).first_or_404()
-
-        if note:
-            note.visits = note.visits+1
-            db.session.commit()
-            return redirect(note.url)"""
+   
 
     @app.errorhandler(HTTP_404_NOT_FOUND)
     def handle_404(e):
