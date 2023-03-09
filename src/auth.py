@@ -5,7 +5,7 @@ from werkzeug.security import check_password_hash, generate_password_hash
 import validators
 from flask_jwt_extended import jwt_required, create_access_token, create_refresh_token, get_jwt_identity
 from flasgger import swag_from
-from src.database import User, db
+from src.database import Note, User, db
 
 auth = Blueprint("auth", __name__, url_prefix="/api/auth")
 
@@ -21,7 +21,7 @@ def register():
         return jsonify({'error': "Heslo je príliš krátke."}), HTTP_400_BAD_REQUEST
 
     if len(username) < 3:
-        return jsonify({'error': "Prezývka musí obsahovať minimalne 3 znaky"}), HTTP_400_BAD_REQUEST
+        return jsonify({'error': "Prezývka musí mať dĺžku minimalne 3 znaky"}), HTTP_400_BAD_REQUEST
 
     if not username.isalnum() or " " in username:
         return jsonify({'error': "Prezývka nesmie obsahovať čísla a medzery"}), HTTP_400_BAD_REQUEST
